@@ -127,6 +127,22 @@ const AlertSettings = () => {
         <Button onClick={handleSave} className="w-full" disabled={isSaving}>
           {isSaving ? 'Saving...' : 'Save Preferences'}
         </Button>
+
+        {settings.email && (
+          <div className="pt-4 border-t">
+            <h4 className="text-sm font-medium mb-2">Recent Saved Preference</h4>
+            <div className="p-3 rounded-lg bg-muted/50 text-sm space-y-1">
+              <p><span className="text-muted-foreground">Email:</span> {settings.email}</p>
+              {settings.phone && <p><span className="text-muted-foreground">Phone:</span> {settings.phone}</p>}
+              <p><span className="text-muted-foreground">Threshold:</span> AQI {settings.threshold}</p>
+              <p><span className="text-muted-foreground">Channels:</span> {[
+                settings.push_enabled && 'Push',
+                settings.email_enabled && 'Email',
+                settings.sms_enabled && 'SMS'
+              ].filter(Boolean).join(', ') || 'None'}</p>
+            </div>
+          </div>
+        )}
       </div>
     </Card>
   );

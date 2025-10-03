@@ -15,10 +15,12 @@ import heroImage from '@/assets/hero-bg.jpg';
 import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
+import { useState } from 'react';
 
 const Index = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [activeTab, setActiveTab] = useState('overview');
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
@@ -45,10 +47,10 @@ const Index = () => {
               </h1>
             </div>
             <nav className="hidden md:flex items-center gap-6">
-              <a href="#overview" className="text-sm font-medium hover:text-primary transition-colors">Overview</a>
-              <a href="#map" className="text-sm font-medium hover:text-primary transition-colors">Map</a>
-              <a href="#forecast" className="text-sm font-medium hover:text-primary transition-colors">Forecast</a>
-              <Button variant="outline" size="sm">
+              <button onClick={() => setActiveTab('overview')} className="text-sm font-medium hover:text-primary transition-colors">Overview</button>
+              <button onClick={() => setActiveTab('map')} className="text-sm font-medium hover:text-primary transition-colors">Map</button>
+              <button onClick={() => setActiveTab('forecast')} className="text-sm font-medium hover:text-primary transition-colors">Forecast</button>
+              <Button variant="outline" size="sm" onClick={() => setActiveTab('alerts')}>
                 <Bell className="w-4 h-4 mr-2" />
                 Alerts
               </Button>
@@ -98,7 +100,7 @@ const Index = () => {
         </div>
 
         {/* Main Dashboard Tabs */}
-        <Tabs defaultValue="overview" className="space-y-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="map">Map</TabsTrigger>
