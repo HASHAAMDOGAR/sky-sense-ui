@@ -14,7 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      alert_settings: {
+        Row: {
+          created_at: string
+          email: string
+          email_enabled: boolean
+          id: string
+          phone: string | null
+          push_enabled: boolean
+          sms_enabled: boolean
+          threshold: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          email_enabled?: boolean
+          id?: string
+          phone?: string | null
+          push_enabled?: boolean
+          sms_enabled?: boolean
+          threshold?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          email_enabled?: boolean
+          id?: string
+          phone?: string | null
+          push_enabled?: boolean
+          sms_enabled?: boolean
+          threshold?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
