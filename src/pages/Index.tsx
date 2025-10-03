@@ -1,4 +1,4 @@
-import { Wind, Bell } from 'lucide-react';
+import { Wind, Bell, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AQICard from '@/components/AQICard';
@@ -12,8 +12,26 @@ import PollutantBreakdown from '@/components/PollutantBreakdown';
 import StationList from '@/components/StationList';
 import AlertSettings from '@/components/AlertSettings';
 import heroImage from '@/assets/hero-bg.jpg';
+import { supabase } from '@/integrations/supabase/client';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
 
 const Index = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      toast({
+        title: "Logout Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    } else {
+      navigate('/auth');
+    }
+  };
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
       {/* Header */}
@@ -33,6 +51,10 @@ const Index = () => {
               <Button variant="outline" size="sm">
                 <Bell className="w-4 h-4 mr-2" />
                 Alerts
+              </Button>
+              <Button variant="ghost" size="sm" onClick={handleLogout}>
+                <LogOut className="w-4 h-4 mr-2" />
+                Logout
               </Button>
             </nav>
           </div>
